@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DELAHOUSE GROUP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #000000;
+      --off-black: #0a0a0a;
+      --dark: #111111;
+      --card: #151515;
+      --white: #ffffff;
+      --cream: #f5f0ea;
+      --gold: #ffffff;
+      --gold-light: #ffffff;
+      --gray: #cccccc;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+      transition: background 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(0,0,0,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 60px;
+    }
+    .nav-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 26px;
+      letter-spacing: 0.3em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.05) 0%, transparent 50%),
+        var(--black);
+    }
+    .hero-grid {
+      display: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 1.2s ease forwards;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 3.5vw, 48px);
+      letter-spacing: 0.55em;
+      line-height: 1;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.1s forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      white-space: nowrap;
+    }
+    .hero-title span {
+      display: inline-block;
+      color: var(--white);
+    }
+    .hero-title::before,
+    .hero-title::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: clamp(60px, 8vw, 140px);
+      background: rgba(255,255,255,0.4);
+      flex-shrink: 0;
+    }
+    .hero-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-style: normal;
+      font-size: clamp(13px, 1.5vw, 18px);
+      color: var(--gold-light);
+      margin-top: 28px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+    .hero-cta {
+      margin-top: 52px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 44px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .btn-primary:hover {
+      color: var(--black);
+    }
+    .btn-primary:hover::before {
+      transform: translateX(0);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+    .hero-scroll span {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 2s ease infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 60px;
+    }
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 40px;
+    }
+
+    /* ABOUT */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 120px;
+      align-items: center;
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .dh-logo {
+      width: 200px;
+      height: 200px;
+      border: 2px solid var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 56px;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .dh-logo::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 1px solid rgba(201,169,110,0.3);
+      border-radius: 50%;
+    }
+    .about-section > div:first-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .about-group-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+    .about-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 32px;
+    }
+    .about-text strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* SERVICES */
+    .services-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .services-left p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.6);
+      max-width: 380px;
+    }
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-item {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--white);
+    }
+    .service-item:first-child { border-top: 1px solid var(--border); }
+    .service-item:hover { padding-left: 16px; }
+    .service-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .service-item:hover .service-name { color: var(--gold); }
+    .service-arrow {
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 18px;
+    }
+    .service-item:hover .service-arrow { opacity: 1; }
+
+    /* PROJECTS */
+    .projects-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .project-card {
+      aspect-ratio: 4/5;
+      background: var(--card);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .project-card:first-child {
+      grid-column: span 2;
+      aspect-ratio: 8/5;
+    }
+    .project-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,169,110,0.05) 0%, transparent 60%);
+    }
+    .project-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-card:hover .project-overlay { opacity: 1; }
+    .project-overlay span {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 4px;
+    }
+
+    /* MAGAZINE */
+    .magazine-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .magazine-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.4s, border-color 0.4s;
+    }
+    .magazine-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,169,110,0.3);
+    }
+    .magazine-img {
+      height: 200px;
+      background: linear-gradient(135deg, #1a1a1a, #222);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .magazine-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, var(--card));
+    }
+    .mag-name {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      z-index: 1;
+    }
+    .magazine-body {
+      padding: 24px;
+    }
+    .magazine-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .magazine-date {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    /* CAMPAIGNS */
+    .campaigns-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .campaigns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .campaign-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: var(--card);
+    }
+    .campaign-card:first-child {
+      aspect-ratio: 16/14;
+      grid-row: span 2;
+    }
+    .campaign-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+      position: relative;
+    }
+    .campaign-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    }
+    .campaign-info {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+    }
+    .campaign-date {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .campaign-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--white);
+    }
+    .campaign-desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* STATS */
+    .stats-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .stats-left {}
+    .stat-item {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item:first-of-type { border-top: 1px solid var(--border); }
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .stats-quote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(22px, 2.8vw, 38px);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.85);
+    }
+    .stats-quote em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 120px;
+    }
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .contact-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: block;
+      margin-bottom: 40px;
+    }
+    .contact-value:hover { color: var(--gold); }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-field label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+    .form-field input,
+    .form-field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      padding: 12px 0;
+      outline: none;
+      transition: border-color 0.3s;
+      resize: none;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+    .submit-btn {
+      align-self: flex-start;
+      margin-top: 12px;
+      padding: 14px 48px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      z-index: -1;
+    }
+    .submit-btn:hover {
+      color: var(--black);
+    }
+    .submit-btn:hover::before {
+      transform: translateX(0);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: 0.3em;
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+    .footer-social {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-social a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gray);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .footer-social a:hover { color: var(--gold); }
+
+    /* FULL WIDTH STRIPS */
+    .strip {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      overflow: hidden;
+      background: var(--off-black);
+    }
+    .strip-inner {
+      display: flex;
+      gap: 60px;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .strip-item {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gray);
+      flex-shrink: 0;
+    }
+    .strip-item span { color: var(--gold); margin-right: 60px; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    /* PROJECT DETAILS */
+    .project-details {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .project-detail-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 48px;
+      transition: border-color 0.3s;
+    }
+    .project-detail-card:hover {
+      border-color: rgba(255,255,255,0.2);
+    }
+    .project-detail-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 12px 0 20px;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .tag {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 5px 12px;
+      color: rgba(255,255,255,0.6);
+    }
+    .project-detail-body p {
+      font-size: 12px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+    }
+    .project-detail-body p:last-child { margin-bottom: 0; }
+
+    /* SERVICES DETAIL PAGE */
+    .services-detail-section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .services-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 60px;
+    }
+    .service-detail-card {
+      padding: 48px;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .service-detail-card:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: var(--card);
+    }
+    .service-detail-number {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 20px;
+    }
+    .service-detail-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-detail-text {
+      font-size: 12px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 14px;
+    }
+    .service-detail-text:last-child { margin-bottom: 0; }
+
+    @media (max-width: 768px) {
+      .project-details,
+      .services-detail-grid { grid-template-columns: 1fr; }
+      .project-detail-card,
+      .service-detail-card { padding: 32px 24px; }
+    }
+      .magazine-section, .campaigns-section, .stats-section, .contact-section {
+        padding: 80px 24px;
+      }
+      .about-section, .services-grid, .stats-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .project-card:first-child { grid-column: span 2; }
+      .magazine-grid { grid-template-columns: 1fr; }
+      .campaigns-grid { grid-template-columns: 1fr; }
+      .campaign-card:first-child { grid-row: span 1; aspect-ratio: 16/10; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+    }
+
+    /* SERVICES OVERLAY */
+    .services-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .services-overlay.active {
+      transform: translateX(0);
+    }
+    .services-overlay-nav {
+      position: sticky;
+      top: 0;
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--black);
+      z-index: 10;
+    }
+    .services-overlay-label {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .services-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .services-close:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+    .services-overlay-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .svc-panel {
+      display: none;
+      max-width: 760px;
+      width: 100%;
+      padding: 80px 60px;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .svc-panel.active {
+      display: block;
+    }
+    .svc-number {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .svc-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 5vw, 64px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .svc-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--white);
+      margin-bottom: 40px;
+    }
+    .svc-text {
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .svc-nav-btns {
+      display: flex;
+      gap: 16px;
+      margin-top: 52px;
+    }
+    .svc-prev, .svc-next {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 12px 32px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .svc-prev:hover, .svc-next:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+    .svc-prev:disabled, .svc-next:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+    .svc-prev:disabled:hover, .svc-next:disabled:hover {
+      background: none;
+      color: var(--white);
+    }
+    @media (max-width: 768px) {
+      .services-overlay-nav { padding: 20px 24px; }
+      .svc-panel { padding: 48px 24px; }
+    }
+
+    /* SERVICES OVERLAY */
+    .shape-ring {
+      position: absolute;
+      border: 1px solid rgba(201,169,110,0.15);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#magazine">Press</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="shape-ring" style="width:900px;height:900px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">
+      <span>DELAHOUSE</span>
+    </h1>
+    <p class="hero-subtitle">Precision. Vision. Growth.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- MARQUEE STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item"><span>✦</span> Social Media</span>
+    <span class="strip-item"><span>✦</span> Business Development</span>
+    <span class="strip-item"><span>✦</span> Brand Design</span>
+    <span class="strip-item"><span>✦</span> Strategy</span>
+    <span class="strip-item"><span>✦</span> Management</span>
+    <span class="strip-item"><span>✦</span> Public Relations</span>
+    <span class="strip-item"><span>✦</span> Networking</span>
+    <span class="strip-item"><span>✦</span> Social Media</span>
+    <span class="strip-item"><span>✦</span> Business Development</span>
+    <span class="strip-item"><span>✦</span> Brand Design</span>
+    <span class="strip-item"><span>✦</span> Strategy</span>
+    <span class="strip-item"><span>✦</span> Operations Management</span>
+    <span class="strip-item"><span>✦</span> Public Relations</span>
+    <span class="strip-item"><span>✦</span> Networking</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-section" id="about">
+  <div>
+    <div class="dh-logo">DH</div>
+    <p class="about-group-label">Delahouse Group</p>
+  </div>
+  <div>
+    <p class="section-label">About Us</p>
+    <div class="divider"></div>
+    <p class="about-text">
+      A <strong>premium consulting firm</strong> dedicated to delivering strategic excellence. We specialize in business and brand development, public relations management, content management, coaching, and professional support services.
+    </p>
+    <p class="about-text">
+      At DELAHOUSE, we pursue quality in <strong>thought and delivery</strong>, ensuring our clients navigate every step and create opportunities for long-term success.
+    </p>
+    <a href="#contact" class="btn-primary">Work With Us</a>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-section" id="services">
+  <p class="section-label">What We Do</p>
+  <h2 class="section-title">Services</h2>
+  <div class="services-list">
+    <a class="service-item" onclick="openService('svc-social')">
+      <span class="service-name">Social Media</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-bizdev')">
+      <span class="service-name">Business Development</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-brand')">
+      <span class="service-name">Brand Design</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-strategy')">
+      <span class="service-name">Strategy</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-ops')">
+      <span class="service-name">Operations Management</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-pr')">
+      <span class="service-name">Public Relations</span>
+      <span class="service-arrow">→</span>
+    </a>
+    <a class="service-item" onclick="openService('svc-networking')">
+      <span class="service-name">Networking</span>
+      <span class="service-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- SERVICES FULL-SCREEN OVERLAY -->
+<div class="services-overlay" id="services-overlay">
+  <div class="services-overlay-nav">
+    <span class="services-overlay-label">Services</span>
+    <button class="services-close" onclick="closeService()">✕ Close</button>
+  </div>
+  <div class="services-overlay-content">
+
+    <div class="svc-panel" id="svc-social">
+      <p class="svc-number">01 / 07</p>
+      <h2 class="svc-title">Social Media</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">We develop and execute social media strategies that are intentional, consistent, and built for growth. From content planning and creative direction to scheduling and platform management, we handle every layer of your social presence.</p>
+      <p class="svc-text">Our approach is data-informed and audience-first — we study what resonates, build around it, and continuously refine to maximize reach, engagement, and community loyalty across all platforms.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-bizdev">
+      <p class="svc-number">02 / 07</p>
+      <h2 class="svc-title">Business Development</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">DELAHOUSE partners with businesses at every stage to identify growth opportunities, build strategic relationships, and create clear pathways to revenue. We work closely with founders and leadership to understand the vision and design a roadmap to get there.</p>
+      <p class="svc-text">Whether you're launching, scaling, or pivoting, our business development services provide the structure, connections, and momentum needed to move forward with confidence and clarity.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-brand">
+      <p class="svc-number">03 / 07</p>
+      <h2 class="svc-title">Brand Design</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">Your visual identity is often the first impression — and we make sure it's a lasting one. We craft brand identities that are distinctive, purposeful, and aligned with who you are and where you're going. From logo design to full visual systems, every element is intentional.</p>
+      <p class="svc-text">We go beyond aesthetics to ensure your design communicates your values, speaks to your audience, and sets you apart in your market. The result is a cohesive identity that works across every touchpoint.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-strategy">
+      <p class="svc-number">04 / 07</p>
+      <h2 class="svc-title">Strategy</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">Great execution starts with great strategy. We work with clients to define their goals, understand their competitive landscape, and build comprehensive strategies that guide every decision. No guesswork — just clear, actionable plans built to deliver results.</p>
+      <p class="svc-text">Our strategic work spans marketing, positioning, launch planning, and long-term growth. We think several steps ahead so our clients are always prepared, positioned, and moving with purpose.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-ops">
+      <p class="svc-number">05 / 07</p>
+      <h2 class="svc-title">Operations Management</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">Behind every thriving business is a foundation of strong operations. DELAHOUSE helps clients build and optimize the internal systems, processes, and workflows that allow their business to run efficiently — freeing up leadership to focus on growth.</p>
+      <p class="svc-text">We assess existing structures, identify inefficiencies, and implement practical solutions that create order, accountability, and scalability. From team coordination to vendor management, we make sure your operations match the level of your ambition.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-pr">
+      <p class="svc-number">06 / 07</p>
+      <h2 class="svc-title">Public Relations</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">We tell your story to the right people at the right time. Our public relations work is built around strategic media placement, press outreach, and narrative development that positions you as a credible and compelling voice in your industry.</p>
+      <p class="svc-text">From securing magazine features and editorial coverage to managing your public image, our PR services are designed to create visibility that matters — not just noise, but meaningful recognition that builds trust and opens doors.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+    <div class="svc-panel" id="svc-networking">
+      <p class="svc-number">07 / 07</p>
+      <h2 class="svc-title">Networking</h2>
+      <div class="svc-divider"></div>
+      <p class="svc-text">The right room changes everything. DELAHOUSE connects clients with the people, partnerships, and opportunities that accelerate growth. We leverage our network strategically to open doors that would otherwise take years to find on your own.</p>
+      <p class="svc-text">Whether it's facilitating introductions, coordinating collaborative opportunities, or placing you in front of the right industry players, our networking support is relationship-driven and results-oriented — built on trust and delivered with discretion.</p>
+      <div class="svc-nav-btns">
+        <button class="svc-prev" onclick="prevService()">← Prev</button>
+        <button class="svc-next" onclick="nextService()">Next →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="projects-section" id="projects">
+  <p class="section-label">Our Work</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <!-- PHOTO: Area 25 project image -->
+      <div class="project-placeholder">
+        <span style="font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.15);text-transform:uppercase">Area 25 Photo</span>
+      </div>
+      <span class="project-label">Area 25</span>
+      <div class="project-overlay"><span>View Project</span></div>
+    </div>
+
+    <div class="project-card">
+      <!-- PHOTO: Gramercy Pilates project image -->
+      <div class="project-placeholder">
+        <span style="font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.15);text-transform:uppercase">Gramercy Pilates Photo</span>
+      </div>
+      <span class="project-label">Gramercy Pilates</span>
+      <div class="project-overlay"><span>View Project</span></div>
+    </div>
+
+    <div class="project-card">
+      <!-- PHOTO: The Saints restaurant image -->
+      <div class="project-placeholder">
+        <span style="font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.15);text-transform:uppercase">The Saints Photo</span>
+      </div>
+      <span class="project-label">The Saints</span>
+      <div class="project-overlay"><span>View Project</span></div>
+    </div>
+
+    <div class="project-card">
+      <!-- PHOTO: Ready Jam Body Fitness Studio image -->
+      <div class="project-placeholder">
+        <span style="font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.15);text-transform:uppercase">Ready Jam Body Photo</span>
+      </div>
+      <span class="project-label">Ready Jam Body</span>
+      <div class="project-overlay"><span>View Project</span></div>
+    </div>
+
+  </div>
+
+  <!-- PROJECT DETAILS -->
+  <div class="project-details">
+
+    <div class="project-detail-card">
+      <div class="project-detail-header">
+        <p class="section-label">Philadelphia, PA</p>
+        <h3 class="project-detail-title">Area 25</h3>
+        <div class="project-tags">
+          <span class="tag">Social Media</span>
+          <span class="tag">Strategy</span>
+          <span class="tag">Public Relations</span>
+        </div>
+      </div>
+      <div class="project-detail-body">
+        <p>Area 25 is a dynamic lifestyle and entertainment brand that came to DELAHOUSE seeking to amplify its presence and grow a loyal audience. We developed a comprehensive social media strategy that elevated their visual identity and increased engagement across all platforms.</p>
+        <p>Our work with Area 25 included full content planning, campaign execution, and community management — resulting in measurable growth in reach, impressions, and audience retention over the course of our partnership.</p>
+      </div>
+    </div>
+
+    <div class="project-detail-card">
+      <div class="project-detail-header">
+        <p class="section-label">New York, NY</p>
+        <h3 class="project-detail-title">Gramercy Pilates</h3>
+        <div class="project-tags">
+          <span class="tag">Business Development</span>
+          <span class="tag">Operations Management</span>
+          <span class="tag">Brand Design</span>
+        </div>
+      </div>
+      <div class="project-detail-body">
+        <p>Gramercy Pilates is a boutique fitness studio committed to delivering a premium wellness experience. DELAHOUSE partnered with them to refine their operational structure, develop their client acquisition strategy, and position the studio for sustainable long-term growth.</p>
+        <p>From streamlining day-to-day operations to building out their marketing presence, our team provided hands-on support that helped Gramercy Pilates strengthen its reputation and expand its client base within a competitive wellness market.</p>
+      </div>
+    </div>
+
+    <div class="project-detail-card">
+      <div class="project-detail-header">
+        <p class="section-label">Center City, Philadelphia, PA</p>
+        <h3 class="project-detail-title">The Saints</h3>
+        <div class="project-tags">
+          <span class="tag">Public Relations</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">Networking</span>
+        </div>
+      </div>
+      <div class="project-detail-body">
+        <p>The Saints is an African Fusion restaurant located in the heart of Center City Philadelphia, offering a bold culinary experience rooted in culture and community. DELAHOUSE worked closely with The Saints to build their public presence, craft their narrative, and connect them with the right audiences and press opportunities.</p>
+        <p>Our strategy focused on storytelling — highlighting the restaurant's unique cultural identity through targeted social media content, press outreach, and strategic networking that positioned The Saints as a must-visit dining destination in Philadelphia.</p>
+      </div>
+    </div>
+
+    <div class="project-detail-card">
+      <div class="project-detail-header">
+        <p class="section-label">Essence Magazine Feature</p>
+        <h3 class="project-detail-title">Ready Jam Body Fitness Studio</h3>
+        <div class="project-tags">
+          <span class="tag">Public Relations</span>
+          <span class="tag">Press</span>
+          <span class="tag">Strategy</span>
+        </div>
+      </div>
+      <div class="project-detail-body">
+        <p>Ready Jam Body is a fitness studio that secured a coveted feature in Essence Magazine under DELAHOUSE's strategic direction. We positioned the studio for press opportunities and guided the narrative that led to this high-profile editorial placement.</p>
+        <p>The Essence Magazine tour feature brought significant visibility to Ready Jam Body, introducing the studio to a national audience and reinforcing its credibility as a premier wellness destination. This placement was a direct result of intentional public relations work and relationship building.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAGAZINE FEATURES -->
+<div class="magazine-section" id="magazine">
+  <p class="section-label">As Seen In</p>
+  <h2 class="section-title">Magazine Features</h2>
+  <div class="magazine-grid">
+    <div class="magazine-card">
+      <div class="magazine-img">
+        <span class="mag-name">Couture Magazine</span>
+      </div>
+      <div class="magazine-body">
+        <h3 class="magazine-title">Read This Before Your First Acupuncture Appointment</h3>
+        <p class="magazine-date">January 2023</p>
+      </div>
+    </div>
+    <div class="magazine-card">
+      <div class="magazine-img">
+        <span class="mag-name">Essence Magazine</span>
+      </div>
+      <div class="magazine-body">
+        <h3 class="magazine-title">Essence Magazine Tour — Ready Jam Body Fitness Studio</h3>
+        <p class="magazine-date">2023</p>
+      </div>
+    </div>
+    <div class="magazine-card">
+      <div class="magazine-img">
+        <span class="mag-name">Essence Magazine</span>
+      </div>
+      <div class="magazine-body">
+        <h3 class="magazine-title">Featured Editorial — Brand Spotlight</h3>
+        <p class="magazine-date">2023</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAMPAIGNS -->
+<div class="campaigns-section" id="campaigns">
+  <p class="section-label">Campaigns</p>
+  <h2 class="section-title">Featured Work</h2>
+  <div class="campaigns-grid">
+    <div class="campaign-card">
+      <div class="campaign-bg"></div>
+      <div class="campaign-info">
+        <p class="campaign-date">Campaign — 2022</p>
+        <h3 class="campaign-title">Campaign for Novo/ft (Lvl)</h3>
+        <p class="campaign-desc">Brand campaign strategy & execution</p>
+      </div>
+    </div>
+    <div class="campaign-card">
+      <div class="campaign-bg"></div>
+      <div class="campaign-info">
+        <p class="campaign-date">May 2022</p>
+        <h3 class="campaign-title">Organic Launch</h3>
+        <p class="campaign-desc">Part of the campaign for the title release of Demi Legend</p>
+      </div>
+    </div>
+    <div class="campaign-card">
+      <div class="campaign-bg"></div>
+      <div class="campaign-info">
+        <p class="campaign-date">June 2023</p>
+        <h3 class="campaign-title">Jewelry Campaign</h3>
+        <p class="campaign-desc">Campaign for Canopy and Bella</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section" id="stats">
+  <div class="stats-grid">
+    <div class="stats-left">
+      <p class="section-label">By The Numbers</p>
+      <h2 class="section-title" style="margin-bottom:40px">Statistics</h2>
+      <div class="stat-item">
+        <div class="stat-number">8%</div>
+        <div class="stat-label">of reach came from non-followers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">83%</div>
+        <div class="stat-label">of profile visits came from the promotion</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">★</div>
+        <div class="stat-label">Most-liked post of the year — Reach &amp; Impressions</div>
+      </div>
+    </div>
+    <div>
+      <p class="stats-quote">"Every brand's story should feel like <em>an experience.</em>"</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <p class="section-label">Let's Connect</p>
+  <h2 class="section-title">Contact Us</h2>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-label">Email</p>
+      <a href="/cdn-cgi/l/email-protection#4821262e27082c2d242920273d3b2d662b2725" class="contact-value"><span class="__cf_email__" data-cfemail="b5dcdbd3daf5d1d0d9d4dddac0c6d09bd6dad8">[email&#160;protected]</span></a>
+
+      <p class="contact-label">Address</p>
+      <a href="#" class="contact-value" style="font-size:18px">United States of America, The World</a>
+
+      <p class="contact-label">Follow</p>
+      <a href="#" class="contact-value" style="font-size:18px">@delahouse</a>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Jane"/>
+          </div>
+          <div class="form-field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe"/>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" placeholder="jane@example.com"/>
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <textarea rows="4" placeholder="Tell us about your brand..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">DELAHOUSE</span>
+  <span class="footer-copy">© 2024 Delahouse Group. All rights reserved.</span>
+  <div class="footer-social">
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Services overlay
+  const serviceOrder = ['svc-social','svc-bizdev','svc-brand','svc-strategy','svc-ops','svc-pr','svc-networking'];
+  let currentSvc = 0;
+
+  function openService(id) {
+    currentSvc = serviceOrder.indexOf(id);
+    showPanel(currentSvc);
+    document.getElementById('services-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeService() {
+    document.getElementById('services-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function showPanel(index) {
+    document.querySelectorAll('.svc-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById(serviceOrder[index]);
+    panel.classList.add('active');
+    // Update button states
+    panel.querySelector('.svc-prev').disabled = index === 0;
+    panel.querySelector('.svc-next').disabled = index === serviceOrder.length - 1;
+  }
+
+  function nextService() {
+    if (currentSvc < serviceOrder.length - 1) { currentSvc++; showPanel(currentSvc); }
+  }
+
+  function prevService() {
+    if (currentSvc > 0) { currentSvc--; showPanel(currentSvc); }
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService(); });
+
+  
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.magazine-card, .campaign-card, .project-card, .s
